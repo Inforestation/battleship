@@ -1,0 +1,30 @@
+Square features:
+1.	ship / empty
+2.	known / unknown
+3.	near a ship / not near a ship
+
+Square types:
+
+1.	emty - unknown - not near a ship
+2.  emty - unknown - near a ship
+
+3.  emty - known - not near a ship
+4.  emty - known - near a ship
+
+5.  ship - unknown - X
+6.  ship - known - X
+
+7.	part of a sunk ship - known - X
+
+1 2 3 4 5 6 7 8 9 10
+A * * * * * * * * *
+B * * * * o o o * *
+C * o * * * * * * *
+D * o * o * * * * *
+E * o * * * * * * *
+F * o * * * * * * *
+G * * * * * * * * o
+H * * * * * * * * o
+J * * * * * * * * *
+
+

@@ -11,6 +11,8 @@
 		18CE81441D22B9D100C4A85A /* board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CE81421D22B9D100C4A85A /* board.cpp */; };
 		18CE81471D22B9F700C4A85A /* playerComputer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CE81451D22B9F700C4A85A /* playerComputer.cpp */; };
 		18CE814A1D22BA1300C4A85A /* square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CE81481D22BA1300C4A85A /* square.cpp */; };
+		18CE814D1D22BBF000C4A85A /* ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CE814B1D22BBF000C4A85A /* ship.cpp */; };
+		18CE81501D257C7C00C4A85A /* gamePlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CE814E1D257C7C00C4A85A /* gamePlot.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +36,10 @@
 		18CE81461D22B9F700C4A85A /* playerComputer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = playerComputer.hpp; sourceTree = "<group>"; };
 		18CE81481D22BA1300C4A85A /* square.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = square.cpp; sourceTree = "<group>"; };
 		18CE81491D22BA1300C4A85A /* square.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = square.hpp; sourceTree = "<group>"; };
+		18CE814B1D22BBF000C4A85A /* ship.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ship.cpp; sourceTree = "<group>"; };
+		18CE814C1D22BBF000C4A85A /* ship.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ship.hpp; sourceTree = "<group>"; };
+		18CE814E1D257C7C00C4A85A /* gamePlot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gamePlot.cpp; sourceTree = "<group>"; };
+		18CE814F1D257C7C00C4A85A /* gamePlot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gamePlot.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,12 +73,16 @@
 			isa = PBXGroup;
 			children = (
 				18CE813B1D22B99500C4A85A /* main.cpp */,
+				18CE81481D22BA1300C4A85A /* square.cpp */,
+				18CE81491D22BA1300C4A85A /* square.hpp */,
+				18CE814B1D22BBF000C4A85A /* ship.cpp */,
+				18CE814C1D22BBF000C4A85A /* ship.hpp */,
 				18CE81421D22B9D100C4A85A /* board.cpp */,
 				18CE81431D22B9D100C4A85A /* board.hpp */,
 				18CE81451D22B9F700C4A85A /* playerComputer.cpp */,
 				18CE81461D22B9F700C4A85A /* playerComputer.hpp */,
-				18CE81481D22BA1300C4A85A /* square.cpp */,
-				18CE81491D22BA1300C4A85A /* square.hpp */,
+				18CE814E1D257C7C00C4A85A /* gamePlot.cpp */,
+				18CE814F1D257C7C00C4A85A /* gamePlot.hpp */,
 			);
 			path = battleship;
 			sourceTree = "<group>";
@@ -136,6 +146,8 @@
 				18CE814A1D22BA1300C4A85A /* square.cpp in Sources */,
 				18CE81441D22B9D100C4A85A /* board.cpp in Sources */,
 				18CE813C1D22B99500C4A85A /* main.cpp in Sources */,
+				18CE814D1D22BBF000C4A85A /* ship.cpp in Sources */,
+				18CE81501D257C7C00C4A85A /* gamePlot.cpp in Sources */,
 				18CE81471D22B9F700C4A85A /* playerComputer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
