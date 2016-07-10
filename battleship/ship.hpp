@@ -2,6 +2,8 @@
 #define ship_hpp
 #include <stdio.h>
 #endif /* ship_hpp */
+using namespace std;
+#include "square.hpp"
 
 enum shipType {
     
@@ -18,12 +20,13 @@ enum shipState {
     sunk = 2
 };
 
-class ship {
+class ship : public square {
     
 public:
     shipType type;
     shipState state;
     
-    ship();
+    
+    ship() {}
     ship(shipType inType, shipState inState);
 };

@@ -20,7 +20,12 @@ const int doubleDeckerSize = 2;
 const int threeDeckerSize = 3;
 const int fourDeckerSize = 4;
 
-// Przechowuje i zarzadza elementami planszy
+const int singleDeckerNumber = 4;
+const int doubleDeckerNumber = 3;
+const int threeDeckerNumber = 2;
+const int fourDeckerNumber = 1;
+
+// Stores and controls the elements on the board
 
 class board{
     
@@ -30,7 +35,20 @@ public:
     int emptyCount;
     bool isReadyToPlay;
     
+    class ship tabSingleDecker[singleDeckerNumber];
+    class ship tabDoubleDecker[doubleDeckerNumber];
+    class ship tabThreeDecker[threeDeckerNumber];
+    class ship tabFourDecker[fourDeckerNumber];
+    
+    int singleDeckerIndex = 0;
+    int doubleDeckerIndex = 0;
+    int threeDeckerIndex = 0;
+    
     square boardOfSquares[boardDimension][boardDimension];
     
+    bool createSingleDecker(string singleDeckerCoord);
+    bool createDoubleDecker(string doubleDeckerCoords[doubleDeckerSize]);
+    
+    void setSquaresAdjacentToSingleDecker();
     board();
 };
