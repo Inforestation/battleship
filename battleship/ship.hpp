@@ -26,6 +26,10 @@ public:
     shipType type;
     shipState state;
     
+    string singleDeckerAdress;
+    string doubleDeckerAdress[2];
+    string threeDeckerAdress[3];
+    string fourDeckerAdress[4];
     
     ship() {}
     ship(shipType inType, shipState inState);

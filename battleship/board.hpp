@@ -38,7 +38,9 @@ public:
     class ship tabSingleDecker[singleDeckerNumber];
     class ship tabDoubleDecker[doubleDeckerNumber];
     class ship tabThreeDecker[threeDeckerNumber];
-    class ship tabFourDecker[fourDeckerNumber];
+    class ship fourDecker;
+    
+    square tempShipSquare;
     
     int singleDeckerIndex = 0;
     int doubleDeckerIndex = 0;
@@ -48,7 +50,12 @@ public:
     
     bool createSingleDecker(string singleDeckerCoord);
     bool createDoubleDecker(string doubleDeckerCoords[doubleDeckerSize]);
+    bool createThreeDecker(string threeDeckerCoords[threeDeckerSize]);
+    bool createFourDecker(string fourDeckerCoords[fourDeckerSize]);
     
-    void setSquaresAdjacentToSingleDecker();
+    void setSquaresAdjacentToShip(square tempShip);
+    
+    void showBoard();
+    
     board();
 };

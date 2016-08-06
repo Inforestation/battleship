@@ -20,12 +20,24 @@
 //#include "playerComputer.hpp"
 //#endif /* playerComputer_hpp */
 
-
 using namespace std;
 
 int main() {
     
     board gameBoard;
+    
+//    gameBoard.createSingleDecker("C8");
+    
+//    string coords[2] = {"A2", "B2"};
+//    gameBoard.createDoubleDecker(coords);
+    
+//    string coords2[2] = {"A1", "A3"};
+//    gameBoard.createDoubleDecker(coords2);
+    
+    string coords3[3] = {"B2", "B4"};
+    gameBoard.createThreeDecker(coords3);
+    
+    gameBoard.showBoard();
     
     return 0;
 }
