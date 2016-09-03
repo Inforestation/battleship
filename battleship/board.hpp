@@ -15,6 +15,12 @@ using namespace std;
 #include "square.hpp"
 #endif /* square_hpp */
 
+struct parsedCoords {
+    
+    int letter;
+    int number;
+};
+
 const int boardDimension = 10;
 const int doubleDeckerSize = 2;
 const int threeDeckerSize = 3;
@@ -25,9 +31,14 @@ const int doubleDeckerNumber = 3;
 const int threeDeckerNumber = 2;
 const int fourDeckerNumber = 1;
 
-// Stores and controls the elements on the board
+int singleDeckerIndex = 0;
+int doubleDeckerIndex = 0;
+int threeDeckerIndex = 0;
+int fourDeckerIndex = 0;
 
-class board{
+// Stores and controls elements on the board
+
+class board {
     
 public:
     int hitCount;
@@ -42,10 +53,6 @@ public:
     
     square tempShipSquare;
     
-    int singleDeckerIndex = 0;
-    int doubleDeckerIndex = 0;
-    int threeDeckerIndex = 0;
-    
     square boardOfSquares[boardDimension][boardDimension];
     
     bool createSingleDecker(string singleDeckerCoord);
@@ -53,9 +60,12 @@ public:
     bool createThreeDecker(string threeDeckerCoords[threeDeckerSize]);
     bool createFourDecker(string fourDeckerCoords[fourDeckerSize]);
     
-    void setSquaresAdjacentToShip(square tempShip);
-    
     void showBoard();
     
     board();
+    
+private:
+    bool isAvailable(parsedCoords coords);
+    bool isntAdjacentToShip(parsedCoords coord);
+    void setSquaresAdjacentToShip(square tempShip);
 };

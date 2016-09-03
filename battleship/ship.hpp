@@ -2,9 +2,7 @@
 #define ship_hpp
 #include <stdio.h>
 #endif /* ship_hpp */
-using namespace std;
 #include "square.hpp"
-
 enum shipType {
     
     singleDecker = 1,
