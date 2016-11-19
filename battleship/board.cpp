@@ -4,10 +4,19 @@ using namespace std;
 
 /////////////// GLOBAL ////////////////
 
+const int singleDeckerNumberDefault = 1;
+const int doubleDeckerNumberDefault = 1;
+const int threeDeckerNumberDefault = 0;
+const int fourDeckerNumberDefault = 0;
 
-/////////////// BOARD CONSTRUCTOR ////////////////
+/////////////// BOARD CONSTRUCTORS ////////////////
 
-board::board() {
+board::board(): singleDeckerNumber(singleDeckerNumberDefault), doubleDeckerNumber(doubleDeckerNumberDefault), threeDeckerNumber(threeDeckerNumberDefault), fourDeckerNumber(fourDeckerNumberDefault) {
+    
+    singleDeckerIndex = 0;
+    doubleDeckerIndex = 0;
+    threeDeckerIndex = 0;
+    fourDeckerIndex = 0;
     
     hitCount = 0;
     missCount = 0;
@@ -26,6 +35,40 @@ board::board() {
         addressLetter++;
     }
 
+    for(int a = 0; a < boardDimension; a++) {
+        for(int b = 0; b < boardDimension; b++) {
+            
+            boardOfSquares[b][a].type = empty;
+            boardOfSquares[b][a].state = unknown;
+            boardOfSquares[b][a].isAdjacentToShip = false;
+        }
+    }
+}
+
+board::board(board const &boardToCopy): singleDeckerNumber(boardToCopy.singleDeckerNumber), doubleDeckerNumber(doubleDeckerNumberDefault), threeDeckerNumber(threeDeckerNumberDefault), fourDeckerNumber(fourDeckerNumberDefault) {
+    
+    this -> singleDeckerIndex = boardToCopy.singleDeckerIndex;
+    this -> doubleDeckerIndex = boardToCopy.doubleDeckerIndex;
+    this -> threeDeckerIndex = boardToCopy.threeDeckerIndex;
+    this -> fourDeckerIndex = boardToCopy.fourDeckerIndex;
+    
+    this -> hitCount = boardToCopy.hitCount;
+    this -> missCount = boardToCopy.missCount;
+    this -> emptyCount = boardToCopy.emptyCount;
+    this -> isReadyToPlay = boardToCopy.isReadyToPlay;
+    
+    char addressLetter = 65;
+    
+    for(int a = 0; a < boardDimension; a++) { 
+        for(int b = 0; b < boardDimension; b++) {
+            
+            string squareAdress = string(1, addressLetter) + to_string(b + 1);
+            
+            boardOfSquares[b][a].address = squareAdress;
+        }
+        addressLetter++;
+    }
+    
     for(int a = 0; a < boardDimension; a++) {
         for(int b = 0; b < boardDimension; b++) {
             
@@ -89,7 +132,7 @@ void board::setSquaresAdjacentToShip(square tempShip) {
             
             if(currentSquareCoords[0] <= boardDimension - 1 && currentSquareCoords[0] >= 0 && currentSquareCoords[1]<= boardDimension - 1 && \
                currentSquareCoords[1] >= 0) {
-                if(boardOfSquares[currentSquareCoords[0]][currentSquareCoords[1]].type != ship) {
+                if(boardOfSquares[currentSquareCoords[0]][currentSquareCoords[1]].type == empty) {
                 
                     boardOfSquares[currentSquareCoords[0]][currentSquareCoords[1]].isAdjacentToShip = true;
                 }
@@ -191,7 +234,7 @@ bool board::isntAdjacentToShip(parsedCoords coord) {
 
 bool board::isAvailable(parsedCoords coords) {
     
-    if((boardOfSquares[coords.number][coords.letter].type != ship) && isntAdjacentToShip(coords)) {
+    if((boardOfSquares[coords.number][coords.letter].type == empty) && isntAdjacentToShip(coords)) {
         
         return true;
     }
@@ -299,10 +342,9 @@ bool board::createSingleDecker(string singleDeckerCoords) {
     
     else {
         
-        tabSingleDecker[singleDeckerIndex].singleDeckerAdress = singleDeckerCoords;
         singleDeckerIndex++;
         
-        boardOfSquares[coords.number][coords.letter].type = ship;
+        boardOfSquares[coords.number][coords.letter].type = singleDecker;
         
         tempShipSquare = boardOfSquares[coords.number][coords.letter];
         setSquaresAdjacentToShip(tempShipSquare);
@@ -352,18 +394,17 @@ bool board::createDoubleDecker(string doubleDeckerCoords[doubleDeckerSize]) {
     
     else {
         
-        tabDoubleDecker[doubleDeckerIndex].doubleDeckerAdress[0] = doubleDeckerCoords[0];
-        tabDoubleDecker[doubleDeckerIndex].doubleDeckerAdress[1] = doubleDeckerCoords[1];
         doubleDeckerIndex++;
         
-        boardOfSquares[coords[0].number][coords[0].letter].type = ship;
-        boardOfSquares[coords[1].number][coords[1].letter].type = ship;
-        
-        tempShipSquare = boardOfSquares[coords[0].number][coords[0].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
-        
-        tempShipSquare = boardOfSquares[coords[1].number][coords[1].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
+        for(int a = 0; a < 2; a++) {
+            
+            boardOfSquares[coords[a].number][coords[a].letter].type = doubleDecker;
+            
+            boardOfSquares[coords[a].number][coords[a].letter].associatedSquares[0] = doubleDeckerCoords[doubleDeckerSize - 1 - a];
+            
+            tempShipSquare = boardOfSquares[coords[a].number][coords[a].letter];
+            setSquaresAdjacentToShip(tempShipSquare);
+        }
         
         cout << "Setting a ship (double decker) successful." << endl;
         
@@ -381,6 +422,18 @@ bool board::createThreeDecker(string threeDeckerCoords[2]) {
     
     coords[0] = stringCoordsParser(threeDeckerCoords[0]);
     coords[1] = stringCoordsParser(threeDeckerCoords[1]);
+    
+    string allStringCoords[3];
+    
+    allStringCoords[0] = threeDeckerCoords[0];
+    allStringCoords[1] = middleSquareCoords;
+    allStringCoords[2] = threeDeckerCoords[1];
+    
+    parsedCoords allCoords[3];
+    
+    allCoords[0] = coords[0];
+    allCoords[1] = coordsMiddle;
+    allCoords[2] = coords[1];
     
     if(!(validAddress(threeDeckerCoords[0])) && !(validAddress(middleSquareCoords)) && !(validAddress(threeDeckerCoords[1]))) {
         
@@ -410,24 +463,29 @@ bool board::createThreeDecker(string threeDeckerCoords[2]) {
     
     else {
         
-        tabThreeDecker[threeDeckerIndex].threeDeckerAdress[0] = threeDeckerCoords[0];
-        tabThreeDecker[threeDeckerIndex].threeDeckerAdress[1] = middleSquareCoords;
-        tabThreeDecker[threeDeckerIndex].threeDeckerAdress[2] = threeDeckerCoords[1];
-        
         threeDeckerIndex++;
         
-        boardOfSquares[coords[0].number][coords[0].letter].type = ship;
-        boardOfSquares[coords[1].number][coords[1].letter].type = ship;
-        boardOfSquares[coordsMiddle.number][coordsMiddle.letter].type = ship;
+        for(int a = 0; a < 2; a++) {
+            
+            boardOfSquares[coords[a].number][coords[a].letter].type = threeDecker;
+            
+            
+            tempShipSquare = boardOfSquares[coords[a].number][coords[a].letter];
+            setSquaresAdjacentToShip(tempShipSquare);
+        }
         
-        tempShipSquare = boardOfSquares[coords[0].number][coords[0].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
-        
-        tempShipSquare = boardOfSquares[coords[1].number][coords[1].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
+        boardOfSquares[coordsMiddle.number][coordsMiddle.letter].type = threeDecker;
         
         tempShipSquare = boardOfSquares[coordsMiddle.number][coordsMiddle.letter];
         setSquaresAdjacentToShip(tempShipSquare);
+        
+        for(int b = 0; b < threeDeckerSize; b++) {
+           
+            for(int c = 0; c < threeDeckerSize - 1; c++) {
+                
+                boardOfSquares[allCoords[b].number][allCoords[b].letter].associatedSquares[c] = allStringCoords[(b + c + 1) % threeDeckerSize];
+            }
+        }
         
         cout << "Setting a ship (three decker) successful." << endl;
         
@@ -455,6 +513,10 @@ bool board::createFourDecker(string fourDeckerCoords[2]) {
     parsedCoords coords[2];
     coords[0] = stringCoordsParser(fourDeckerCoords[0]);
     coords[1] = stringCoordsParser(fourDeckerCoords[1]);
+    
+    parsedCoords allCoords[] = {coords[0], coordsMiddle[0], coordsMiddle[1], coords[1]};
+    
+    string allStringCoords[] = {fourDeckerCoords[0], middleSquaresCoords[0], middleSquaresCoords[1], fourDeckerCoords[1]};
     
     if(!(validAddress(fourDeckerCoords[0])) && !(validAddress(middleSquaresCoords[0])) && !(validAddress(middleSquaresCoords[1])) && !(validAddress(fourDeckerCoords[1]))) {
         
@@ -484,29 +546,27 @@ bool board::createFourDecker(string fourDeckerCoords[2]) {
     
     else {
         
-        fourDecker.fourDeckerAdress[0] = fourDeckerCoords[0];
-        fourDecker.fourDeckerAdress[1] = middleSquaresCoords[0];
-        fourDecker.fourDeckerAdress[2] = middleSquaresCoords[1];
-        fourDecker.fourDeckerAdress[3] = fourDeckerCoords[1];
-        
         fourDeckerIndex++;
         
-        boardOfSquares[coords[0].number][coords[0].letter].type = ship;
-        boardOfSquares[coords[1].number][coords[1].letter].type = ship;
-        boardOfSquares[coordsMiddle[0].number][coordsMiddle[0].letter].type = ship;
-        boardOfSquares[coordsMiddle[1].number][coordsMiddle[1].letter].type = ship;
+        for(int a = 0; a < 2; a++) {
+            
+            boardOfSquares[coords[a].number][coords[a].letter].type = fourDecker;
+            boardOfSquares[coordsMiddle[a].number][coordsMiddle[a].letter].type = fourDecker;
+            
+            tempShipSquare = boardOfSquares[coords[a].number][coords[a].letter];
+            setSquaresAdjacentToShip(tempShipSquare);
+            
+            tempShipSquare = boardOfSquares[coordsMiddle[a].number][coordsMiddle[a].letter];
+            setSquaresAdjacentToShip(tempShipSquare);
+        }
         
-        tempShipSquare = boardOfSquares[coords[0].number][coords[0].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
-        
-        tempShipSquare = boardOfSquares[coords[1].number][coords[1].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
-        
-        tempShipSquare = boardOfSquares[coordsMiddle[0].number][coordsMiddle[0].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
-        
-        tempShipSquare = boardOfSquares[coordsMiddle[1].number][coordsMiddle[1].letter];
-        setSquaresAdjacentToShip(tempShipSquare);
+        for(int b = 0; b < fourDeckerSize; b++) {
+            
+            for(int c = 0; c < fourDeckerSize - 1; c++) {
+                
+                boardOfSquares[allCoords[b].number][allCoords[b].letter].associatedSquares[c] = allStringCoords[(b + c + 1) % fourDeckerSize];
+            }
+        }
         
         cout << "Setting a ship (four decker) successful." << endl;
         
@@ -515,7 +575,7 @@ bool board::createFourDecker(string fourDeckerCoords[2]) {
 }
 
 
-void board::showBoard() {
+void board::showBoard(bool showUnknownShips) {
     
         cout << "   A B C D E F G H I J" << endl;
     
@@ -533,14 +593,23 @@ void board::showBoard() {
         
         for(int column = 0; column < boardDimension; column++) {
             
-            if(boardOfSquares[row][column].type == ship) {
+            if(boardOfSquares[row][column].type != empty) {
                 
-                cout << "o";
-            }
-            
-            else if(boardOfSquares[row][column].isAdjacentToShip == true) {
+                if(boardOfSquares[row][column].state == guessed) {
                     
-                cout << "A";
+                    cout << "X";
+                }
+                    
+                else if(showUnknownShips == true) {
+                    
+                    cout << "O";
+                    
+                }
+                
+                else {
+                    
+                    cout << ".";
+                }
             }
             
             else {
@@ -556,6 +625,76 @@ void board::showBoard() {
     
     cout << endl << endl;
 }
+
+guessResult board::hitSquare(string guess) {
+    
+    parsedCoords parsedGuess = stringCoordsParser(guess);
+    
+    boardOfSquares[parsedGuess.number][parsedGuess.letter].state = guessed;
+    
+    if(boardOfSquares[parsedGuess.number][parsedGuess.letter].type != empty) {
+        
+        if(isSunk(guess) == true) {
+            
+            return sunk;
+        }
+        
+        return hit;
+    }
+    
+    else {
+        
+        return miss;
+    }
+}
+
+bool board::isSunk(string &guess) {
+    
+    parsedCoords coords = stringCoordsParser(guess);
+    
+    square guessSquare = boardOfSquares[coords.number][coords.letter];
+    parsedCoords associatedSquareCoords;
+    
+    for(int a = 0; a < guessSquare.type - 1; a++) {
+        
+        associatedSquareCoords = stringCoordsParser(guessSquare.associatedSquares[a]);
+        
+        if(boardOfSquares[associatedSquareCoords.number][associatedSquareCoords.letter].state != guessed) {
+            
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+bool board::hasGameEnded() {
+    
+    for(int a = 0; a < boardDimension; a++) {
+        
+        for(int b = 0; b < boardDimension; b++) {
+            
+            if(boardOfSquares[a][b].type != empty) {
+                
+                if(boardOfSquares[a][b].state != guessed) {
+                    
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+
+
 
 
 

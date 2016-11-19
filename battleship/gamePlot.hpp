@@ -8,6 +8,11 @@
 #include "board.hpp"
 #endif /* board_hpp */
 
+#ifndef playerComputer_hpp
+#define playerComputer_hpp
+#include "playerComputer.hpp"
+#endif /* playerComputer_hpp */
+
 #include <iostream>
 using namespace std;
 
@@ -20,16 +25,32 @@ enum gameState {
     gameEnd = 4
 };
 
+enum gameplayState {
+    
+    playerTurn = 0,
+    computerTurn = 1,
+    gameplayEnd = 2
+};
+
 class gamePlot {
     
 public:
     gamePlot();
     
 private:
+   
+    playerComputer computer;
+    
     board boardPlayer;
     board boardComputer;
-    
     gameState state;
+    gameplayState playState;
     
     void stateMachine();
+    
+    void createBoardPlayer();
+    void createBoardComputer();
+    void playGame();
+    void turnPlayer();
+    void turnComputer();
 };

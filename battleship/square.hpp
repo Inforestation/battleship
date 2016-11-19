@@ -9,7 +9,10 @@ using namespace std;
 enum squareType {
     
     empty = 0,
-    ship = 1
+    singleDecker = 1,
+    doubleDecker = 2,
+    threeDecker = 3,
+    fourDecker = 4
 };
 
 enum squareState {
@@ -25,6 +28,7 @@ public:
     squareType type;
     squareState state;
     string address;
+    string associatedSquares[3];
     
     square();
     square(squareType inType, squareState inState);
