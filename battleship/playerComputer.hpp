@@ -9,21 +9,22 @@
 
 #include <stdio.h>
 #include <string>
+#include <stdlib.h>
+#include <cstdio>
+#include <ctime>
+#include <iostream>
 using namespace std;
 
 class playerComputer {
     
 public:
-    
-    string *SDAddresses;
-    string **DDAddresses;
-    string **TDAddresses;
-    string **FDAddresses;
 
-    string generateShipSD();
-    string generateShipDD();
-    string generateShipTD();
-    string generateShipFD();
+    void generateShipSD();
+    void generateShipDD();
+    void generateShipTD();
+    void generateShipFD();
+    
+    board boardComputer;
     
     playerComputer();
 };

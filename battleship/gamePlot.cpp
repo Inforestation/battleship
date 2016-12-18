@@ -7,6 +7,10 @@ gamePlot::gamePlot() {
     
     computer = playerComputer();
     
+    computer.generateShipSD();
+    computer.generateShipDD();
+    computer.generateShipTD();
+    
     state = initialization;
     playState = playerTurn;
     
@@ -232,6 +236,8 @@ void gamePlot::turnPlayer() {
     
     boardComputer.showBoard(false);
 }
+
+
 
 // COMPUTER'S TURN!
 

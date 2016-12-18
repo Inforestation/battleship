@@ -1,10 +1,189 @@
 #include "playerComputer.hpp"
 using namespace std;
 
+string createFinalShipAddress(string startAddress, squareType type);
+
 playerComputer::playerComputer() {
     
-    SDAddresses = new string[singleDeckerNumberDefault];
-    DDAddresses = new string[singleDeckerNumberDefault];
-    TDAddresses = new string[singleDeckerNumberDefault];
-    FDAddresses = new string[singleDeckerNumberDefault];
 }
+
+void playerComputer::generateShipSD() {
+    
+    srand(time(NULL));
+    
+    string addressLetter;
+    string addressNumber;
+    
+    string fullAddress;
+    
+    int shipsPlacedNumber = 0;
+    
+    while(shipsPlacedNumber < singleDeckerNumberDefault) {
+        
+        addressLetter = (rand() % 10) + 65;
+        addressNumber = to_string(rand() % 10 + 1);
+        
+        fullAddress = addressLetter + addressNumber;
+        
+        if(boardComputer.createSingleDecker(fullAddress)) {
+            
+           shipsPlacedNumber++;
+        }
+        
+//        cout << fullAddress << endl;
+    }
+}
+
+void playerComputer::generateShipDD() {
+    
+    srand(time(NULL));
+    
+    string addressLetter;
+    string addressNumber;
+    
+    string fullAddress[2];
+    
+    int shipsPlacedNumber = 0;
+    
+    while(shipsPlacedNumber < doubleDeckerNumberDefault) {
+        
+        addressLetter = (rand() % 10) + 'A';
+        addressNumber = to_string(rand() % 10 + 1);
+        
+        fullAddress[0] = addressLetter + addressNumber;
+        
+        fullAddress[1] = createFinalShipAddress(fullAddress[0], doubleDecker);
+        
+        if(boardComputer.createDoubleDecker(fullAddress)) {
+            
+            shipsPlacedNumber++;
+        }
+        
+            cout << fullAddress[0] << endl << fullAddress[1] << endl;
+    }
+}
+
+void playerComputer::generateShipTD() {
+    
+    srand(time(NULL));
+    
+    string addressLetter;
+    string addressNumber;
+    
+    string fullAddress[2];
+    
+    int shipsPlacedNumber = 0;
+    
+    while(shipsPlacedNumber < threeDeckerNumberDefault) {
+        
+        addressLetter = (rand() % 10) + 'A';
+        addressNumber = to_string(rand() % 10 + 1);
+        
+        fullAddress[0] = addressLetter + addressNumber;
+        
+        fullAddress[1] = createFinalShipAddress(fullAddress[0], threeDecker);
+        
+        if(boardComputer.createThreeDecker(fullAddress)) {
+            
+            shipsPlacedNumber++;
+        }
+        
+            cout << fullAddress[0] << endl << fullAddress[1] << endl;
+    }
+
+}
+
+void playerComputer::generateShipFD() {
+    
+    
+}
+
+
+string createFinalShipAddress(string startAddress, squareType type) {
+
+    string finalSquareAddress = startAddress;
+    
+    char proposition;
+    bool finalAddressIsValid = false;
+    
+    while(!finalAddressIsValid) {
+        
+        int finalSquareDirection = (rand() % 4);
+    
+        if(finalSquareDirection == 0) { // up
+        
+            proposition = startAddress[1] - (type - 1);
+        
+            if(proposition > 48 && proposition < 58) {
+                    
+                  finalSquareAddress[1] = finalSquareAddress[1] - (type - 1);
+                
+                finalAddressIsValid = true;
+            }
+        }
+    
+        else if(finalSquareDirection == 1) { //right
+        
+            proposition = startAddress[0] + (type - 1);
+            
+            if(proposition >= 'A' && proposition <= 'J') {
+                
+                finalSquareAddress[0] = finalSquareAddress[0] + (type - 1);
+                
+                finalAddressIsValid = true;
+            }
+        }
+            
+        else if(finalSquareDirection == 2) { //down
+            
+            if(startAddress[1] < type + 7 && startAddress.length() < 3) {
+            
+                proposition = startAddress[1] + (type - 1);
+            
+                if(proposition > 48 && proposition < 58) {
+                
+                        finalSquareAddress[1] = finalSquareAddress[1] + (type - 1);
+                
+                    finalAddressIsValid = true;
+                }
+            
+                else if(proposition == 58){
+                
+                    finalSquareAddress = string(1, finalSquareAddress[0]) + "10";
+                
+                    finalAddressIsValid = true;
+                }
+            }
+        }
+            
+        else { // left
+            
+            proposition = startAddress[0] - (type - 1);
+            
+            if(proposition >='A' && proposition <= 'J') {
+                
+                finalSquareAddress[0] = finalSquareAddress[0] - (type - 1);
+                
+                finalAddressIsValid = true;
+            }
+        }
+    }
+    
+    return finalSquareAddress;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

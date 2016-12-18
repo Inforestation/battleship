@@ -4,9 +4,9 @@ using namespace std;
 
 /////////////// GLOBAL ////////////////
 
-const int singleDeckerNumberDefault = 1;
-const int doubleDeckerNumberDefault = 1;
-const int threeDeckerNumberDefault = 0;
+const int singleDeckerNumberDefault = 0;
+const int doubleDeckerNumberDefault = 0;
+const int threeDeckerNumberDefault = 10;
 const int fourDeckerNumberDefault = 0;
 
 /////////////// BOARD CONSTRUCTORS ////////////////

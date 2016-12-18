@@ -1,7 +1,5 @@
 #ifndef board_hpp
 #define board_hpp
-#include <stdio.h>
-using namespace std;
 #endif /* board_hpp */
 
 #include <string>
@@ -10,6 +8,9 @@ using namespace std;
 #define square_hpp
 #include "square.hpp"
 #endif /* square_hpp */
+
+#include <stdio.h>
+using namespace std;
 
 struct parsedCoords {
     

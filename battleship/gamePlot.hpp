@@ -39,7 +39,7 @@ public:
     
 private:
    
-    playerComputer computer;
+    playerComputer computer; // playerComputer class' object
     
     board boardPlayer;
     board boardComputer;
