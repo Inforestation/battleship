@@ -6,7 +6,7 @@
 
 using namespace std;
 
-enum squareType {
+enum squareType {       // is a virtue of a square on a board: either empty or ship (x-decker)
     
     empty = 0,
     singleDecker = 1,
@@ -15,7 +15,7 @@ enum squareType {
     fourDecker = 4
 };
 
-enum squareState {
+enum squareState {      // is a virtue of a square on a board: has player guessed it yet?
     
     unknown = 0,
     guessed = 1

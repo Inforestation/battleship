@@ -3,6 +3,8 @@
 void introduction();
 board createBoard();
 
+/////////////// gamePlot constructor
+
 gamePlot::gamePlot() {
     
     computer = playerComputer();
@@ -10,12 +12,15 @@ gamePlot::gamePlot() {
     computer.generateShipSD();
     computer.generateShipDD();
     computer.generateShipTD();
+    computer.generateShipFD();
     
     state = initialization;
     playState = playerTurn;
     
     stateMachine();
 }
+
+/////////////// moderating phases of the game's plot
 
 void gamePlot::stateMachine() {
     
@@ -58,6 +63,8 @@ void gamePlot::stateMachine() {
     }
 }
 
+/////////////// PHASE 1: introduction
+
 
 void introduction() {
     
@@ -71,6 +78,8 @@ void introduction() {
         cin >> startingCommand;
     }
 }
+
+/////////////// PHASE 2: creating player's and computer's board
 
 board createBoard() {
     
@@ -159,10 +168,15 @@ void gamePlot::createBoardPlayer() {
     boardPlayer = createBoard();
 }
 
-void gamePlot::createBoardComputer() {
+void gamePlot::createBoardComputer() { ///////// to change
     
-    boardComputer = createBoard();
+    computer.generateShipSD();
+    computer.generateShipDD();
+    computer.generateShipTD();
+    computer.generateShipFD();
 }
+
+/////////////// PHASE 3: the game
 
 void gamePlot::playGame() {
     
@@ -189,7 +203,7 @@ void gamePlot::playGame() {
     }
 }
 
-// PLAYER'S TURN!
+// PLAYER'S TURN
 
 void gamePlot::turnPlayer() {
     
@@ -207,7 +221,7 @@ void gamePlot::turnPlayer() {
     cout << endl;
     
     guessResult result = boardComputer.hitSquare(guess);
-
+    
     if(result == hit) {
         
         cout << "Hit!" << endl << endl;
@@ -217,11 +231,11 @@ void gamePlot::turnPlayer() {
         
         cout << "Hit and sunk!" << endl << endl;
         
-        if(boardComputer.hasGameEnded()) { 
+        if(boardComputer.hasGameEnded()) {
             
             cout << "Player wins!" << endl << endl;
             
-             playState = gameplayEnd;
+            playState = gameplayEnd;
         }
     }
     
@@ -239,52 +253,52 @@ void gamePlot::turnPlayer() {
 
 
 
-// COMPUTER'S TURN!
+// COMPUTER'S TURN
 
 void gamePlot::turnComputer() {
-
-    cout << endl << endl << "COMPUTER'S TURN" << endl << endl;
     
-    cout << "Player's board" << endl << endl;
-    
-    boardPlayer.showBoard(false);
-
-    cout << "Guess." << endl;
-
-    string guess;
-
-    cin >> guess;
-    cout << endl;
-    
-    guessResult result = boardPlayer.hitSquare(guess);
-
-    if(result == hit) {
-    
-        cout << "Hit!" << endl << endl;
-    }
-    
-    else if(result == sunk) {
-    
-        cout << "Hit and sunk!" << endl << endl;
-        
-        if(boardPlayer.hasGameEnded()) {
-            
-            cout << "Computer wins!" << endl << endl;
-            
-            playState = gameplayEnd;
-        }
-    }
-
-    else {
-    
-        cout << "Miss!" << endl << endl;
-    
-        playState = playerTurn;
-    }
-
-    cout << "Player's board" << endl << endl;
-    
-    boardPlayer.showBoard(false);
+    //    cout << endl << endl << "COMPUTER'S TURN" << endl << endl;
+    //
+    //    cout << "Player's board" << endl << endl;
+    //
+    //    boardPlayer.showBoard(false);
+    //
+    //    cout << "Guess." << endl;
+    //
+    //    string guess;
+    //
+    //    cin >> guess;
+    //    cout << endl;
+    //
+    //    guessResult result = boardPlayer.hitSquare(guess);
+    //
+    //    if(result == hit) {
+    //
+    //        cout << "Hit!" << endl << endl;
+    //    }
+    //
+    //    else if(result == sunk) {
+    //
+    //        cout << "Hit and sunk!" << endl << endl;
+    //
+    //        if(boardPlayer.hasGameEnded()) {
+    //
+    //            cout << "Computer wins!" << endl << endl;
+    //
+    //            playState = gameplayEnd;
+    //        }
+    //    }
+    //
+    //    else {
+    //
+    //        cout << "Miss!" << endl << endl;
+    //    
+    //        playState = playerTurn;
+    //    }
+    //
+    //    cout << "Player's board" << endl << endl;
+    //    
+    //    boardPlayer.showBoard(false);
 }
 
 

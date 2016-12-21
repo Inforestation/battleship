@@ -6,8 +6,8 @@ using namespace std;
 
 const int singleDeckerNumberDefault = 0;
 const int doubleDeckerNumberDefault = 0;
-const int threeDeckerNumberDefault = 10;
-const int fourDeckerNumberDefault = 0;
+const int threeDeckerNumberDefault = 0;
+const int fourDeckerNumberDefault = 3;
 
 /////////////// BOARD CONSTRUCTORS ////////////////
 
@@ -575,9 +575,15 @@ bool board::createFourDecker(string fourDeckerCoords[2]) {
 }
 
 
+
+/////////////// BOARD FUNCIONALITY ////////////////
+
+///////////////// show board in current state
+
+
 void board::showBoard(bool showUnknownShips) {
     
-        cout << "   A B C D E F G H I J" << endl;
+    cout << "   A B C D E F G H I J" << endl;
     
     for(int row = 0; row < boardDimension; row++) {
         
@@ -599,7 +605,7 @@ void board::showBoard(bool showUnknownShips) {
                     
                     cout << "X";
                 }
-                    
+                
                 else if(showUnknownShips == true) {
                     
                     cout << "O";
@@ -613,7 +619,7 @@ void board::showBoard(bool showUnknownShips) {
             }
             
             else {
-                    
+                
                 cout << ".";
             }
             
@@ -625,6 +631,8 @@ void board::showBoard(bool showUnknownShips) {
     
     cout << endl << endl;
 }
+
+///////////////// returns the outcome of a guess (miss / hit / hit nad sunk)
 
 guessResult board::hitSquare(string guess) {
     
@@ -648,6 +656,8 @@ guessResult board::hitSquare(string guess) {
     }
 }
 
+///////////////// says wheter the ship is hit and sunk or just sunk
+
 bool board::isSunk(string &guess) {
     
     parsedCoords coords = stringCoordsParser(guess);
@@ -668,6 +678,8 @@ bool board::isSunk(string &guess) {
     return true;
 }
 
+///////////////// says wheter the game has ended (all the ships are hit and sunk)
+
 bool board::hasGameEnded() {
     
     for(int a = 0; a < boardDimension; a++) {
@@ -683,10 +695,9 @@ bool board::hasGameEnded() {
             }
         }
     }
-
+    
     return true;
 }
-
 
 
 

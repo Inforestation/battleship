@@ -70,14 +70,14 @@
 			isa = PBXGroup;
 			children = (
 				18CE813B1D22B99500C4A85A /* main.cpp */,
-				18CE81481D22BA1300C4A85A /* square.cpp */,
 				18CE81491D22BA1300C4A85A /* square.hpp */,
-				18CE81421D22B9D100C4A85A /* board.cpp */,
+				18CE81481D22BA1300C4A85A /* square.cpp */,
 				18CE81431D22B9D100C4A85A /* board.hpp */,
-				18CE81451D22B9F700C4A85A /* playerComputer.cpp */,
+				18CE81421D22B9D100C4A85A /* board.cpp */,
 				18CE81461D22B9F700C4A85A /* playerComputer.hpp */,
-				18CE814E1D257C7C00C4A85A /* gamePlot.cpp */,
+				18CE81451D22B9F700C4A85A /* playerComputer.cpp */,
 				18CE814F1D257C7C00C4A85A /* gamePlot.hpp */,
+				18CE814E1D257C7C00C4A85A /* gamePlot.cpp */,
 			);
 			path = battleship;
 			sourceTree = "<group>";
