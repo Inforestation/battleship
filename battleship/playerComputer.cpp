@@ -120,6 +120,14 @@ void playerComputer::generateShipFD() {
     }
 }
 
+void playerComputer::prepareBoard() {
+    
+    generateShipSD();
+    generateShipDD();
+    generateShipTD();
+    generateShipFD();
+}
+
 /////////////// creating second square's address based on the generated square's address
 
 string createFinalShipAddress(string startAddress, squareType type) {

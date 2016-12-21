@@ -9,11 +9,6 @@ gamePlot::gamePlot() {
     
     computer = playerComputer();
     
-    computer.generateShipSD();
-    computer.generateShipDD();
-    computer.generateShipTD();
-    computer.generateShipFD();
-    
     state = initialization;
     playState = playerTurn;
     
@@ -168,12 +163,11 @@ void gamePlot::createBoardPlayer() {
     boardPlayer = createBoard();
 }
 
-void gamePlot::createBoardComputer() { ///////// to change
+void gamePlot::createBoardComputer() {
     
-    computer.generateShipSD();
-    computer.generateShipDD();
-    computer.generateShipTD();
-    computer.generateShipFD();
+    computer.prepareBoard();
+    
+    computer.boardComputer.showBoard(true);
 }
 
 /////////////// PHASE 3: the game
@@ -211,7 +205,7 @@ void gamePlot::turnPlayer() {
     
     cout << "Computer's board" << endl << endl;
     
-    boardComputer.showBoard(false);
+    computer.boardComputer.showBoard(false);
     
     cout << "Guess." << endl;
     
@@ -220,7 +214,7 @@ void gamePlot::turnPlayer() {
     cin >> guess;
     cout << endl;
     
-    guessResult result = boardComputer.hitSquare(guess);
+    guessResult result = computer.boardComputer.hitSquare(guess);
     
     if(result == hit) {
         
@@ -231,7 +225,7 @@ void gamePlot::turnPlayer() {
         
         cout << "Hit and sunk!" << endl << endl;
         
-        if(boardComputer.hasGameEnded()) {
+        if(computer.boardComputer.hasGameEnded()) {
             
             cout << "Player wins!" << endl << endl;
             
@@ -248,7 +242,7 @@ void gamePlot::turnPlayer() {
     
     cout << "Computer's board" << endl << endl;
     
-    boardComputer.showBoard(false);
+    computer.boardComputer.showBoard(false);
 }
 
 
@@ -257,48 +251,48 @@ void gamePlot::turnPlayer() {
 
 void gamePlot::turnComputer() {
     
-    //    cout << endl << endl << "COMPUTER'S TURN" << endl << endl;
-    //
-    //    cout << "Player's board" << endl << endl;
-    //
-    //    boardPlayer.showBoard(false);
-    //
-    //    cout << "Guess." << endl;
-    //
-    //    string guess;
-    //
-    //    cin >> guess;
-    //    cout << endl;
-    //
-    //    guessResult result = boardPlayer.hitSquare(guess);
-    //
-    //    if(result == hit) {
-    //
-    //        cout << "Hit!" << endl << endl;
-    //    }
-    //
-    //    else if(result == sunk) {
-    //
-    //        cout << "Hit and sunk!" << endl << endl;
-    //
-    //        if(boardPlayer.hasGameEnded()) {
-    //
-    //            cout << "Computer wins!" << endl << endl;
-    //
-    //            playState = gameplayEnd;
-    //        }
-    //    }
-    //
-    //    else {
-    //
-    //        cout << "Miss!" << endl << endl;
-    //    
-    //        playState = playerTurn;
-    //    }
-    //
-    //    cout << "Player's board" << endl << endl;
-    //    
-    //    boardPlayer.showBoard(false);
+        cout << endl << endl << "COMPUTER'S TURN" << endl << endl;
+    
+        cout << "Player's board" << endl << endl;
+    
+        boardPlayer.showBoard(false);
+    
+        cout << "Guess." << endl;
+    
+        string guess;
+    
+        cin >> guess;
+        cout << endl;
+    
+        guessResult result = boardPlayer.hitSquare(guess);
+    
+        if(result == hit) {
+    
+            cout << "Hit!" << endl << endl;
+        }
+    
+        else if(result == sunk) {
+    
+            cout << "Hit and sunk!" << endl << endl;
+    
+            if(boardPlayer.hasGameEnded()) {
+    
+                cout << "Computer wins!" << endl << endl;
+    
+                playState = gameplayEnd;
+            }
+        }
+    
+        else {
+    
+            cout << "Miss!" << endl << endl;
+        
+            playState = playerTurn;
+        }
+    
+        cout << "Player's board" << endl << endl;
+        
+        boardPlayer.showBoard(false);
 }
 
 

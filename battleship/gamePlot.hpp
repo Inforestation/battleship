@@ -42,7 +42,6 @@ private:
     playerComputer computer; // playerComputer class' object
     
     board boardPlayer;
-    board boardComputer;
     gameState state;
     gameplayState playState;
     

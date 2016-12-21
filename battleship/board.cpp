@@ -4,10 +4,10 @@ using namespace std;
 
 /////////////// GLOBAL ////////////////
 
-const int singleDeckerNumberDefault = 0;
-const int doubleDeckerNumberDefault = 0;
-const int threeDeckerNumberDefault = 0;
-const int fourDeckerNumberDefault = 3;
+const int singleDeckerNumberDefault = 1;
+const int doubleDeckerNumberDefault = 1;
+const int threeDeckerNumberDefault = 1;
+const int fourDeckerNumberDefault = 1;
 
 /////////////// BOARD CONSTRUCTORS ////////////////
 
@@ -371,7 +371,7 @@ bool board::createDoubleDecker(string doubleDeckerCoords[doubleDeckerSize]) {
         return false;
     }
     
-    else if(!(isAvailable(coords[0])) && !(isAvailable(coords[1]))) {
+    else if(!(isAvailable(coords[0])) || !(isAvailable(coords[1]))) {
         
         cout << "Error: Given coordinates (" << doubleDeckerCoords[0]  << " or / and " << doubleDeckerCoords[1] << ") aren't available." << endl;
         
@@ -384,8 +384,6 @@ bool board::createDoubleDecker(string doubleDeckerCoords[doubleDeckerSize]) {
         
         return false;
     }
-    
-    
     
     else if(doubleDeckerIndex > doubleDeckerNumber) {
         
@@ -442,7 +440,7 @@ bool board::createThreeDecker(string threeDeckerCoords[2]) {
         return false;
     }
     
-    else if(!(isAvailable(coords[0])) && !(isAvailable(coordsMiddle)) && !(isAvailable(coords[1]))) {
+    else if(!(isAvailable(coords[0])) || !(isAvailable(coordsMiddle)) || !(isAvailable(coords[1]))) {
         
         cout << "Error: Given coordinates aren't available" << endl;
         
@@ -525,7 +523,7 @@ bool board::createFourDecker(string fourDeckerCoords[2]) {
         return false;
     }
     
-    else if(!(isAvailable(coords[0])) && !(isAvailable(coordsMiddle[0])) && !(isAvailable(coordsMiddle[1])) && !(isAvailable(coords[1]))) {
+    else if(!(isAvailable(coords[0])) || !(isAvailable(coordsMiddle[0])) || !(isAvailable(coordsMiddle[1])) || !(isAvailable(coords[1]))) {
         
         cout << "Error: Given coordinates aren't available" << endl;
         
@@ -574,12 +572,9 @@ bool board::createFourDecker(string fourDeckerCoords[2]) {
     }
 }
 
-
-
 /////////////// BOARD FUNCIONALITY ////////////////
 
 ///////////////// show board in current state
-
 
 void board::showBoard(bool showUnknownShips) {
     

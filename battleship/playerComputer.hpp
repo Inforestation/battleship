@@ -19,12 +19,14 @@ class playerComputer {
     
 public:
 
+    void prepareBoard();
+    board boardComputer;
+    playerComputer();
+    
+private:
+    
     void generateShipSD();
     void generateShipDD();
     void generateShipTD();
     void generateShipFD();
-    
-    board boardComputer;
-    
-    playerComputer();
 };
