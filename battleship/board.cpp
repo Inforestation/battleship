@@ -591,40 +591,46 @@ void board::showBoard(bool showUnknownShips) {
             
             cout << row + 1 << " ";
         }
-        
+    
         for(int column = 0; column < boardDimension; column++) {
             
             if(boardOfSquares[row][column].type != empty) {
                 
                 if(boardOfSquares[row][column].state == guessed) {
                     
-                    cout << "X";
-                }
-                
-                else if(showUnknownShips == true) {
-                    
-                    cout << "O";
-                    
+                    cout << "* ";
                 }
                 
                 else {
                     
-                    cout << ".";
+                    if(showUnknownShips == true) {
+                        
+                        cout << "O ";
+                    }
+                    
+                    else {
+                    
+                        cout << ". ";
+                    }
                 }
             }
-            
-            else {
-                
-                cout << ".";
-            }
-            
-            cout << " ";
-        }
         
+                else {
+                    
+                    if(boardOfSquares[row][column].state == guessed) {
+                    
+                        cout << "X ";
+                    }
+                
+                    else {
+                    
+                        cout << ". ";
+                    }
+                }
+        }
         cout << endl;
     }
-    
-    cout << endl << endl;
+    cout << endl;
 }
 
 ///////////////// returns the outcome of a guess (miss / hit / hit nad sunk)
