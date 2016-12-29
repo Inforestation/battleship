@@ -20,3 +20,11 @@ int main() {
     
     return 0;
 }
+
+// 1. computer playing mechanics
+//      1a. not guessing already guessed squares
+//      1b. when square is hit, computer continues to guess near this square
+//2. when hit and sunk, all adjacent squares are set as guessed
+
+// po odgadnięciu pola przez komputer na planszy gracza nie wyświetla sie zgadnięcie
+

@@ -22,6 +22,7 @@ public:
     void prepareBoard();
     board boardComputer;
     playerComputer();
+    string generateGuess();
     
 private:
     

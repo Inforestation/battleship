@@ -70,6 +70,8 @@ public:
     guessResult hitSquare(string guess);
     bool isSunk(string &guess);
     bool hasGameEnded();
+    bool isGuessed(string coords);
+    void setSquaresAdjacentToSunkShip(string sunkShipCoords);
     
     board();
     

@@ -5,6 +5,8 @@ string createFinalShipAddress(string startAddress, squareType type);
 
 playerComputer::playerComputer() {}
 
+/////////////// SETTING COMPUTER'S BOARD ////////////////
+
 /////////////// generating computer's ships
 
 void playerComputer::generateShipSD() {
@@ -202,6 +204,30 @@ string createFinalShipAddress(string startAddress, squareType type) {
     
     return finalSquareAddress;
 }
+
+/////////////// GAMEPLAY ////////////////
+
+string playerComputer::generateGuess() {
+    
+    string finalGuess, addressLetter, addressNumber;
+    
+    addressLetter = (rand() % 10) + 'A';
+    addressNumber = to_string(rand() % 10 + 1);
+    
+    finalGuess = addressLetter + addressNumber;
+    
+    if(!(boardComputer.isGuessed(finalGuess))) {
+    
+        return finalGuess;
+    }
+    
+    generateGuess();
+    
+    return 0;
+}
+
+
+
 
 
 

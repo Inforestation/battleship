@@ -5,9 +5,9 @@ using namespace std;
 /////////////// GLOBAL ////////////////
 
 const int singleDeckerNumberDefault = 1;
-const int doubleDeckerNumberDefault = 1;
-const int threeDeckerNumberDefault = 1;
-const int fourDeckerNumberDefault = 1;
+const int doubleDeckerNumberDefault = 0;
+const int threeDeckerNumberDefault = 0;
+const int fourDeckerNumberDefault = 0;
 
 /////////////// BOARD CONSTRUCTORS ////////////////
 
@@ -380,7 +380,7 @@ bool board::createDoubleDecker(string doubleDeckerCoords[doubleDeckerSize]) {
     
     else if(!(shipSquaresAreAdjacentDD(doubleDeckerCoords))) {
         
-        cout << "Error: Ship squares (" << doubleDeckerCoords[0] << " and " << doubleDeckerCoords[1] << ") aren't adjacent." << endl;
+        cout << "Error: Ship squares aren't in required distance form each other." << endl;
         
         return false;
     }
@@ -449,7 +449,7 @@ bool board::createThreeDecker(string threeDeckerCoords[2]) {
     
     else if(!(shipSquaresAreAdjacentTD(threeDeckerCoords, middleSquareCoords))) {
         
-        cout << "Error: Ship squares aren't adjacent." << endl;
+        cout << "Error: Ship squares aren't in required distance form each other.." << endl;
         
         return false;
     }
@@ -532,7 +532,7 @@ bool board::createFourDecker(string fourDeckerCoords[2]) {
     
     else if(!(shipSquaresAreAdjacentFD(fourDeckerCoords, middleSquaresCoords))) {
         
-        cout << "Error: Ship squares aren't adjacent." << endl;
+        cout << "Error: Ship squares aren't in required distance form each other." << endl;
         
         return false;
     }
@@ -692,6 +692,27 @@ bool board::hasGameEnded() {
     }
     
     return true;
+}
+
+///////////////// says wheter the given square is guessed
+
+bool board::isGuessed(string coords) {
+    
+    parsedCoords finalCoords = stringCoordsParser(coords);
+    
+    if(boardOfSquares[finalCoords.number][finalCoords.letter].state == guessed) {
+        
+        return true;
+    }
+    
+    return false;
+}
+
+///////////////// when a ship is sunk, all adjacent squares are set as guessed and empty
+
+void board::setSquaresAdjacentToSunkShip(string sunkShipCoords) {
+    
+    
 }
 
 

@@ -193,6 +193,7 @@ void gamePlot::playGame() {
             break;
             
         default:
+            
             break;
     }
 }
@@ -251,48 +252,45 @@ void gamePlot::turnPlayer() {
 
 void gamePlot::turnComputer() {
     
-        cout << endl << endl << "COMPUTER'S TURN" << endl << endl;
+    string guess = computer.generateGuess();
+    guessResult result = boardPlayer.hitSquare(guess);
     
-        cout << "Player's board" << endl << endl;
+    cout << endl << endl << "COMPUTER'S TURN" << endl << endl;
     
-        boardPlayer.showBoard(false);
+    cout << "Player's board" << endl << endl;
     
-        cout << "Guess." << endl;
+    boardPlayer.showBoard(false);
     
-        string guess;
+    cout << "Guessing... " << guess << endl << endl;
     
-        cin >> guess;
-        cout << endl;
-    
-        guessResult result = boardPlayer.hitSquare(guess);
-    
-        if(result == hit) {
-    
-            cout << "Hit!" << endl << endl;
-        }
-    
-        else if(result == sunk) {
-    
-            cout << "Hit and sunk!" << endl << endl;
-    
-            if(boardPlayer.hasGameEnded()) {
-    
-                cout << "Computer wins!" << endl << endl;
-    
-                playState = gameplayEnd;
-            }
-        }
-    
-        else {
-    
-            cout << "Miss!" << endl << endl;
+    if(result == hit) {
         
-            playState = playerTurn;
-        }
+        cout << "Hit!" << endl << endl;
+    }
     
-        cout << "Player's board" << endl << endl;
+    else if(result == sunk) {
         
-        boardPlayer.showBoard(false);
+        cout << "Hit and sunk!" << endl << endl;
+        
+        if(boardPlayer.hasGameEnded()) {
+            
+            cout << "Computer wins!" << endl << endl;
+            
+            playState = gameplayEnd;
+        }
+    }
+    
+    else {
+        
+        cout << "Miss!" << endl << endl;
+        
+        playState = playerTurn;
+    }
+    
+    cout << "Player's board" << endl << endl;
+    
+    boardPlayer.showBoard(false);
+    
 }
 
 
