@@ -4,10 +4,10 @@ using namespace std;
 
 /////////////// GLOBAL ////////////////
 
-const int singleDeckerNumberDefault = 1;
+const int singleDeckerNumberDefault = 0;
 const int doubleDeckerNumberDefault = 0;
 const int threeDeckerNumberDefault = 0;
-const int fourDeckerNumberDefault = 0;
+const int fourDeckerNumberDefault = 1;
 
 /////////////// BOARD CONSTRUCTORS ////////////////
 
@@ -676,6 +676,8 @@ bool board::isSunk(string &guess) {
         }
     }
     
+    setSquaresAdjacentToSunkShip(guess);
+    
     return true;
 }
 
@@ -718,7 +720,31 @@ bool board::isGuessed(string coords) {
 
 void board::setSquaresAdjacentToSunkShip(string sunkShipCoords) {
     
+    parsedCoords parsedSunkShipCoords = stringCoordsParser(sunkShipCoords);
     
+    for(int j = -1; j <=1 ; j++) {
+        
+        for(int k = -1; k <= 1; k++) {
+            
+            boardOfSquares[(parsedSunkShipCoords.number) + j][(parsedSunkShipCoords.letter) + k].state = guessed;
+        }
+    }
+    
+    for(int i = 0; i < (boardOfSquares[parsedSunkShipCoords.number][parsedSunkShipCoords.letter].type) - 1; i++) {
+        
+        parsedCoords associatedSquare = stringCoordsParser(boardOfSquares[(parsedSunkShipCoords.number)][(parsedSunkShipCoords.letter)].associatedSquares[i]);
+        
+        for(int j = -1; j <=1 ; j++) {
+            
+            for(int k = -1; k <= 1; k++) {
+            
+                if((associatedSquare.number + j) >= 0 && (associatedSquare.number + j) <= boardDimension && (associatedSquare.letter + k) >= 0 && (associatedSquare.letter) + k <= boardDimension) {
+                
+                    boardOfSquares[(associatedSquare.number) + j][(associatedSquare.letter) + k].state = guessed;
+                }
+            }
+        }
+    }
 }
 
 
