@@ -30,4 +30,12 @@ private:
     void generateShipDD();
     void generateShipTD();
     void generateShipFD();
+    
+    string previouslyNotHitGuess();
+    string previouslyHitGuess();
+    string previouslyHitOnceGuess();
+    
+    bool lastTurnHit = false;
+    bool hitAtLeastTwice = false;
+    string lastTurnGuess;
 };

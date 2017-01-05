@@ -209,6 +209,19 @@ string createFinalShipAddress(string startAddress, squareType type) {
 
 string playerComputer::generateGuess() {
     
+    if(lastTurnHit == false) {
+        
+        return previouslyNotHitGuess();
+    }
+    
+    else {
+        
+        return previouslyHitGuess();
+    }
+}
+
+string playerComputer::previouslyNotHitGuess() {
+    
     string finalGuess, addressLetter, addressNumber;
     
     addressLetter = (rand() % 10) + 'A';
@@ -217,7 +230,18 @@ string playerComputer::generateGuess() {
     finalGuess = addressLetter + addressNumber;
     
     if(!(boardComputer.isGuessed(finalGuess))) {
-    
+        
+        if(boardComputer.isSunk(finalGuess) == true) {
+            
+            lastTurnHit = true;
+        }
+        
+        else {
+            
+            lastTurnHit = false;
+        }
+        
+        lastTurnGuess = finalGuess;
         return finalGuess;
     }
     
@@ -226,7 +250,99 @@ string playerComputer::generateGuess() {
     return 0;
 }
 
+string playerComputer::previouslyHitGuess() {
+    
+    string finalGuess, addressLetter, addressNumber;
+    
+    if(hitAtLeastTwice == false) {
+        
+        previouslyHitOnceGuess();
+    }
+    
+    else {
+        
+        
+    }
+    
+    return finalGuess;
+}
 
+string playerComputer::previouslyHitOnceGuess() {
+    
+    string finalGuess;
+    char proposition;
+    bool finalAddressIsValid = false;
+    
+    int finalSquareDirection = (rand() % 4);
+    
+    while(!finalAddressIsValid) {
+    
+        if(finalSquareDirection == 0) { // up
+        
+            proposition = lastTurnGuess[1] - 1;
+        
+            if(proposition > 48 && proposition < 58) {
+            
+                finalGuess[1] = finalGuess[1] - 1;
+            
+                finalAddressIsValid = true;
+            }
+        }
+    
+        else if(finalSquareDirection == 1) { //right
+     
+            proposition = lastTurnGuess[0] + 1;
+        
+            if(proposition >= 'A' && proposition <= 'J') {
+            
+                finalGuess[0] = finalGuess[0] + 1;
+            
+                finalAddressIsValid = true;
+            }
+        }
+    
+        else if(finalSquareDirection == 2) { //down
+      
+            if(lastTurnGuess.length() < 3) {
+            
+                proposition = lastTurnGuess[1] + 1;
+            
+                if(proposition > 48 && proposition < 58) {
+                
+                    finalGuess[1] = finalGuess[1] + 1;
+                
+                    finalAddressIsValid = true;
+                }
+            
+                else if(proposition == 58){
+                
+                    finalGuess = string(1, finalGuess[0]) + "10";
+                
+                    finalAddressIsValid = true;
+                }
+            }
+
+        }
+    
+        else { // left
+       
+            proposition = lastTurnGuess[0] - 1;
+        
+            if(proposition >= 'A' && proposition <= 'J') {
+            
+                finalGuess[0] = finalGuess[0] - 1;
+            
+                finalAddressIsValid = true;
+            }
+        }
+    }
+    return finalGuess;
+}
+
+//  1 zgadnięty -->> losowanie, w którym kierunku zgadywać +++
+//  więcej zgadnięte ->> który kieunek? zgadujemy w tym samym
+//  jeśli pudło, zmieniamy kierynek, jesli pole adjacent to ship, zmieniamy kierunek
+//  jeśli ustalimy kierunek (2 trafione) ->> zgadujemy tylko w tym kierunku, juz nie po bokach
 
 
 
