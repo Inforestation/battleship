@@ -3,7 +3,10 @@ using namespace std;
 
 string createFinalShipAddress(string startAddress, squareType type);
 
-playerComputer::playerComputer() {}
+playerComputer::playerComputer() {
+
+    state = previouslyNotHit;
+}
 
 /////////////// SETTING COMPUTER'S BOARD ////////////////
 
@@ -207,17 +210,57 @@ string createFinalShipAddress(string startAddress, squareType type) {
 
 /////////////// GAMEPLAY ////////////////
 
-string playerComputer::generateGuess() {
+void playerComputer::stateMachine() {
+    
+    switch(state) {
+            
+        case previouslyNotHit:
+            
+            previouslyNotHitGuess();
+            generateGuess();
+            break;
+            
+        case hitOnce:
+            
+            previouslyHitOnceGuess();
+            generateGuess();
+            break;
+            
+        case hitMoreThanOnce:
+            
+            generateGuess();
+            break;
+            
+            
+        case mishit:
+            generateGuess();
+            break;
+    }
+}
+
+void playerComputer::generateGuess() {
     
     if(lastTurnHit == false) {
         
-        return previouslyNotHitGuess();
+        state = previouslyNotHit;
     }
     
     else {
         
-        return previouslyHitGuess();
+        state = previouslyNotHit;
     }
+}
+
+direction playerComputer::findShipDirection(string shipSquareCoords[2]) {
+    
+    direction shipDirection = horizontal;
+    
+    if(shipSquareCoords[0][0] == shipSquareCoords[1][0]) {
+        
+        shipDirection = vertical;
+    }
+    
+    return shipDirection;
 }
 
 string playerComputer::previouslyNotHitGuess() {
@@ -341,7 +384,6 @@ string playerComputer::previouslyHitOnceGuess() {
 
 //  1 zgadnięty -->> losowanie, w którym kierunku zgadywać +++
 //  więcej zgadnięte ->> który kieunek? zgadujemy w tym samym
-//  jeśli pudło, zmieniamy kierynek, jesli pole adjacent to ship, zmieniamy kierunek
 //  jeśli ustalimy kierunek (2 trafione) ->> zgadujemy tylko w tym kierunku, juz nie po bokach
 
 

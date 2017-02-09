@@ -15,6 +15,20 @@
 #include <iostream>
 using namespace std;
 
+enum guessingState {
+    
+    previouslyNotHit = 0,
+    hitOnce = 1,
+    hitMoreThanOnce = 2,
+    mishit = 3
+};
+
+enum direction {
+    
+    vertical = 0,
+    horizontal = 1
+};
+
 class playerComputer {
     
 public:
@@ -22,7 +36,7 @@ public:
     void prepareBoard();
     board boardComputer;
     playerComputer();
-    string generateGuess();
+    void generateGuess();
     
 private:
     
@@ -31,11 +45,17 @@ private:
     void generateShipTD();
     void generateShipFD();
     
+    void stateMachine();
+    guessingState state;
+    
     string previouslyNotHitGuess();
     string previouslyHitGuess();
     string previouslyHitOnceGuess();
     
+    direction findShipDirection(string shipSquareCoords[2]);
+    
     bool lastTurnHit = false;
     bool hitAtLeastTwice = false;
     string lastTurnGuess;
+    string lastGuesses[2];
 };
