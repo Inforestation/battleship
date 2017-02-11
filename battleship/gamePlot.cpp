@@ -210,12 +210,12 @@ void gamePlot::turnPlayer() {
     
     cout << "Guess." << endl;
     
-    string guess;
+    string guessPlayer;
     
-    cin >> guess;
+    cin >> guessPlayer;
     cout << endl;
     
-    guessResult result = computer.boardComputer.hitSquare(guess);
+    guessResult result = computer.boardComputer.hitSquare(guessPlayer);
     
     if(result == hit) {
         
@@ -252,14 +252,12 @@ void gamePlot::turnPlayer() {
 
 void gamePlot::turnComputer() {
     
-    string guess = computer.generateGuess();
+    string guess = computer.generateGuess(boardPlayer);
     guessResult result = boardPlayer.hitSquare(guess);
     
     cout << endl << endl << "COMPUTER'S TURN" << endl << endl;
     
     cout << "Player's board" << endl << endl;
-    
-    boardPlayer.showBoard(false);
     
     cout << "Guessing... " << guess << endl << endl;
     
@@ -290,7 +288,6 @@ void gamePlot::turnComputer() {
     cout << "Player's board" << endl << endl;
     
     boardPlayer.showBoard(false);
-    
 }
 
 

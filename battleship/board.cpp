@@ -7,7 +7,7 @@ using namespace std;
 const int singleDeckerNumberDefault = 0;
 const int doubleDeckerNumberDefault = 0;
 const int threeDeckerNumberDefault = 0;
-const int fourDeckerNumberDefault = 1;
+const int fourDeckerNumberDefault = 5;
 
 /////////////// BOARD CONSTRUCTORS ////////////////
 
@@ -641,6 +641,15 @@ guessResult board::hitSquare(string guess) {
     
     boardOfSquares[parsedGuess.number][parsedGuess.letter].state = guessed;
     
+    return isHit(guess);
+}
+
+///////////////// returns the outcome of a guess (miss / hit / hit nad sunk)
+
+guessResult board::isHit(string guess) {
+    
+    parsedCoords parsedGuess = stringCoordsParser(guess);
+    
     if(boardOfSquares[parsedGuess.number][parsedGuess.letter].type != empty) {
         
         if(isSunk(guess) == true) {
@@ -655,6 +664,7 @@ guessResult board::hitSquare(string guess) {
         
         return miss;
     }
+
 }
 
 ///////////////// says wheter the ship is hit and sunk or just sunk

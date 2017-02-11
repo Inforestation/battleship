@@ -210,35 +210,42 @@ string createFinalShipAddress(string startAddress, squareType type) {
 
 /////////////// GAMEPLAY ////////////////
 
-void playerComputer::stateMachine() {
+void playerComputer::stateMachine(board boardPlayer) {
     
     switch(state) {
             
         case previouslyNotHit:
             
-            previouslyNotHitGuess();
-            generateGuess();
+            guess = previouslyNotHitGuess(boardPlayer);
+            updateState();
             break;
             
         case hitOnce:
             
-            previouslyHitOnceGuess();
-            generateGuess();
+            guess = previouslyHitOnceGuess(boardPlayer);
+            updateState();
             break;
             
         case hitMoreThanOnce:
             
-            generateGuess();
+            updateState();
             break;
             
             
         case mishit:
-            generateGuess();
+            
+            updateState();
             break;
     }
 }
 
-void playerComputer::generateGuess() {
+string playerComputer::generateGuess(board boardPlayer) {
+    
+    stateMachine(boardPlayer);
+    return guess;
+}
+
+void playerComputer::updateState() {
     
     if(lastTurnHit == false) {
         
@@ -247,7 +254,7 @@ void playerComputer::generateGuess() {
     
     else {
         
-        state = previouslyNotHit;
+        state = hitOnce;
     }
 }
 
@@ -263,7 +270,7 @@ direction playerComputer::findShipDirection(string shipSquareCoords[2]) {
     return shipDirection;
 }
 
-string playerComputer::previouslyNotHitGuess() {
+string playerComputer::previouslyNotHitGuess(board boardPlayer) {
     
     string finalGuess, addressLetter, addressNumber;
     
@@ -272,9 +279,15 @@ string playerComputer::previouslyNotHitGuess() {
     
     finalGuess = addressLetter + addressNumber;
     
-    if(!(boardComputer.isGuessed(finalGuess))) {
+    return getFinalGuess(boardPlayer, finalGuess);
+}
+
+
+string playerComputer::getFinalGuess(board boardPlayer, string finalGuess) {
+    
+    if(!(boardPlayer.isGuessed(finalGuess))) {
         
-        if(boardComputer.isSunk(finalGuess) == true) {
+        if(boardPlayer.isHit(finalGuess) == true) {
             
             lastTurnHit = true;
         }
@@ -287,30 +300,28 @@ string playerComputer::previouslyNotHitGuess() {
         lastTurnGuess = finalGuess;
         return finalGuess;
     }
-    
-    generateGuess();
-    
     return 0;
 }
 
-string playerComputer::previouslyHitGuess() {
-    
-    string finalGuess, addressLetter, addressNumber;
-    
-    if(hitAtLeastTwice == false) {
-        
-        previouslyHitOnceGuess();
-    }
-    
-    else {
-        
-        
-    }
-    
-    return finalGuess;
-}
+//
+//string playerComputer::previouslyHitGuess() {
+//    
+//    string finalGuess, addressLetter, addressNumber;
+//    
+//    if(hitAtLeastTwice == false) {
+//        
+//        previouslyHitOnceGuess();
+//    }
+//    
+//    else {
+//        
+//        
+//    }
+//    
+//    return finalGuess;
+//}
 
-string playerComputer::previouslyHitOnceGuess() {
+string playerComputer::previouslyHitOnceGuess(board boardPlayer) {
     
     string finalGuess;
     char proposition;
@@ -379,7 +390,7 @@ string playerComputer::previouslyHitOnceGuess() {
             }
         }
     }
-    return finalGuess;
+    return getFinalGuess(boardPlayer, finalGuess);
 }
 
 //  1 zgadnięty -->> losowanie, w którym kierunku zgadywać +++

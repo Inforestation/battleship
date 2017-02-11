@@ -33,10 +33,12 @@ class playerComputer {
     
 public:
 
+    string guess;
     void prepareBoard();
+    string generateGuess(board boardPlayer);
     board boardComputer;
     playerComputer();
-    void generateGuess();
+    void updateState();
     
 private:
     
@@ -45,17 +47,18 @@ private:
     void generateShipTD();
     void generateShipFD();
     
-    void stateMachine();
+    void stateMachine(board boardPlayer);
     guessingState state;
     
-    string previouslyNotHitGuess();
+    string previouslyNotHitGuess(board boardPlayer);
     string previouslyHitGuess();
-    string previouslyHitOnceGuess();
+    string previouslyHitOnceGuess(board boardPlayer);
     
+    string getFinalGuess(board boardPlayer, string finalGuess);
     direction findShipDirection(string shipSquareCoords[2]);
     
     bool lastTurnHit = false;
     bool hitAtLeastTwice = false;
-    string lastTurnGuess;
     string lastGuesses[2];
+    string lastTurnGuess;
 };
