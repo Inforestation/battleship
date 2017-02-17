@@ -6,6 +6,7 @@ string createFinalShipAddress(string startAddress, squareType type);
 playerComputer::playerComputer() {
 
     state = previouslyNotHit;
+    hitCounter = 0;
 }
 
 /////////////// SETTING COMPUTER'S BOARD ////////////////
@@ -212,29 +213,18 @@ string createFinalShipAddress(string startAddress, squareType type) {
 
 void playerComputer::stateMachine(board boardPlayer) {
     
+    updateState();
+    
     switch(state) {
             
         case previouslyNotHit:
             
             guess = previouslyNotHitGuess(boardPlayer);
-            updateState();
             break;
             
-        case hitOnce:
+        case previouslyHit:
             
-            guess = previouslyHitOnceGuess(boardPlayer);
-            updateState();
-            break;
-            
-        case hitMoreThanOnce:
-            
-            updateState();
-            break;
-            
-            
-        case mishit:
-            
-            updateState();
+            guess = previouslyHitGuess(boardPlayer);
             break;
     }
 }
@@ -247,14 +237,14 @@ string playerComputer::generateGuess(board boardPlayer) {
 
 void playerComputer::updateState() {
     
-    if(lastTurnHit == false) {
+    if(hitCounter == 0) {
         
         state = previouslyNotHit;
     }
     
     else {
         
-        state = hitOnce;
+        state = previouslyHit;
     }
 }
 
@@ -287,30 +277,22 @@ string playerComputer::getFinalGuess(board boardPlayer, string finalGuess) {
     
     if(!(boardPlayer.isGuessed(finalGuess))) {
         
-        if(boardPlayer.isHit(finalGuess) == miss) {
-            
-           lastTurnHit = false;
-        }
-        
-        else {
-            
-             lastTurnHit = true; /// nie wchodzi tutaj!!
-        }
         lastTurnGuess = finalGuess;
         return finalGuess;
     }
     return 0;
 }
 
-// dla wyznaczenia kierunku wielomasztowca: bool czy było trafione squareDirection ma być ustalone albo losowo (jeśli pierwszy raz) lub ma być taki jak poprzednio (jeśli kolejny raz)
-
-string playerComputer::previouslyHitOnceGuess(board boardPlayer) {
+string playerComputer::previouslyHitGuess(board boardPlayer) {
     
-    string finalGuess;
+    string finalGuess = lastTurnGuess;
     char proposition;
     bool finalAddressIsValid = false;
     
-    int finalSquareDirection = (rand() % 4);
+    if(hitCounter == 0) {
+        
+        finalSquareDirection = (rand() % 4);
+    }
     
     while(!finalAddressIsValid) {
     
@@ -372,14 +354,14 @@ string playerComputer::previouslyHitOnceGuess(board boardPlayer) {
                 finalAddressIsValid = true;
             }
         }
+        
+        if(finalAddressIsValid == false) {
+            
+            finalSquareDirection = (rand() % 4);
+        }
     }
     return getFinalGuess(boardPlayer, finalGuess);
 }
-
-//  1 zgadnięty -->> losowanie, w którym kierunku zgadywać +++
-//  więcej zgadnięte ->> który kieunek? zgadujemy w tym samym
-//  jeśli ustalimy kierunek (2 trafione) ->> zgadujemy tylko w tym kierunku, juz nie po bokach
-
 
 
 

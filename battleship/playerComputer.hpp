@@ -18,9 +18,7 @@ using namespace std;
 enum guessingState {
     
     previouslyNotHit = 0,
-    hitOnce = 1,
-    hitMoreThanOnce = 2,
-    mishit = 3
+    previouslyHit = 1,
 };
 
 enum direction {
@@ -39,6 +37,7 @@ public:
     board boardComputer;
     playerComputer();
     void updateState();
+    int hitCounter;
     
 private:
     
@@ -52,13 +51,13 @@ private:
     
     string previouslyNotHitGuess(board boardPlayer);
     string previouslyHitGuess();
-    string previouslyHitOnceGuess(board boardPlayer);
+    string previouslyHitGuess(board boardPlayer);
+    
+    int finalSquareDirection;
     
     string getFinalGuess(board boardPlayer, string finalGuess);
     direction findShipDirection(string shipSquareCoords[2]);
     
-    bool lastTurnHit = false;
-    bool hitAtLeastTwice = false;
     string lastGuesses[2];
     string lastTurnGuess;
 };
