@@ -287,39 +287,22 @@ string playerComputer::getFinalGuess(board boardPlayer, string finalGuess) {
     
     if(!(boardPlayer.isGuessed(finalGuess))) {
         
-        if(boardPlayer.isHit(finalGuess) == true) {
+        if(boardPlayer.isHit(finalGuess) == miss) {
             
-            lastTurnHit = true;
+           lastTurnHit = false;
         }
         
         else {
             
-            lastTurnHit = false;
+             lastTurnHit = true; /// nie wchodzi tutaj!!
         }
-        
         lastTurnGuess = finalGuess;
         return finalGuess;
     }
     return 0;
 }
 
-//
-//string playerComputer::previouslyHitGuess() {
-//    
-//    string finalGuess, addressLetter, addressNumber;
-//    
-//    if(hitAtLeastTwice == false) {
-//        
-//        previouslyHitOnceGuess();
-//    }
-//    
-//    else {
-//        
-//        
-//    }
-//    
-//    return finalGuess;
-//}
+// dla wyznaczenia kierunku wielomasztowca: bool czy było trafione squareDirection ma być ustalone albo losowo (jeśli pierwszy raz) lub ma być taki jak poprzednio (jeśli kolejny raz)
 
 string playerComputer::previouslyHitOnceGuess(board boardPlayer) {
     
