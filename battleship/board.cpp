@@ -4,10 +4,10 @@ using namespace std;
 
 /////////////// GLOBAL ////////////////
 
-const int singleDeckerNumberDefault = 4;
-const int doubleDeckerNumberDefault = 3;
-const int threeDeckerNumberDefault = 2;
-const int fourDeckerNumberDefault = 1;
+const int singleDeckerNumberDefault = 0;
+const int doubleDeckerNumberDefault = 0;
+const int threeDeckerNumberDefault = 0;
+const int fourDeckerNumberDefault = 3;
 
 /////////////// BOARD CONSTRUCTORS ////////////////
 
@@ -732,11 +732,14 @@ void board::setSquaresAdjacentToSunkShip(string sunkShipCoords) {
     
     parsedCoords parsedSunkShipCoords = stringCoordsParser(sunkShipCoords);
     
-    for(int j = -1; j <=1 ; j++) {
+    for(int j = -1; j <= 1 ; j++) {
         
         for(int k = -1; k <= 1; k++) {
             
-            boardOfSquares[(parsedSunkShipCoords.number) + j][(parsedSunkShipCoords.letter) + k].state = guessed;
+            if((parsedSunkShipCoords.number + j) >= 0 && (parsedSunkShipCoords.number + j) < boardDimension && (parsedSunkShipCoords.letter + k) >= 0 && (parsedSunkShipCoords.letter) + k < boardDimension) {
+                
+                boardOfSquares[(parsedSunkShipCoords.number) + j][(parsedSunkShipCoords.letter) + k].state = guessed;
+            }
         }
     }
     
@@ -744,11 +747,11 @@ void board::setSquaresAdjacentToSunkShip(string sunkShipCoords) {
         
         parsedCoords associatedSquare = stringCoordsParser(boardOfSquares[(parsedSunkShipCoords.number)][(parsedSunkShipCoords.letter)].associatedSquares[i]);
         
-        for(int j = -1; j <=1 ; j++) {
+        for(int j = -1; j <= 1 ; j++) {
             
             for(int k = -1; k <= 1; k++) {
             
-                if((associatedSquare.number + j) >= 0 && (associatedSquare.number + j) <= boardDimension && (associatedSquare.letter + k) >= 0 && (associatedSquare.letter) + k <= boardDimension) {
+                if((associatedSquare.number + j) >= 0 && (associatedSquare.number + j) < boardDimension && (associatedSquare.letter + k) >= 0 && (associatedSquare.letter) + k < boardDimension) {
                 
                     boardOfSquares[(associatedSquare.number) + j][(associatedSquare.letter) + k].state = guessed;
                 }
